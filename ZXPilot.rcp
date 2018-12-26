@@ -1,0 +1,28 @@
+BITMAP ID 1 "Keyboard_lr.bmp"
+BITMAP ID 2 "Keyboard_hr.bmp"
+BITMAP ID 3 "Keyboard_he.bmp"
+
+ALERT ID 1000
+  ERROR
+BEGIN
+  TITLE "Internal error"
+  MESSAGE "Please send to ^3 emulated game and this error code:\n" \
+           "#^1:^2"
+  BUTTONS "Exit"
+END
+
+ALERT ID 1001
+  CONFIRMATION
+BEGIN
+  TITLE "Good bye"
+  MESSAGE "Do you want to save snapshot before exit?"
+  BUTTONS "Yes" "Continue playing" "No"
+END
+
+APPLICATIONICONNAME ID 100 "ZX-Pilot"
+
+ICONFAMILY ID 1000 "icon1bpp.bmp" "" "icon4bpp.bmp" "icon8bpp.bmp"
+
+SMALLICONFAMILY ID 1001 "Small_icon1bpp.bmp" "" "Small_icon4bpp.bmp" "Small_icon8bpp.bmp"
+
+DATA "ROM" ID 1000 "48.ROM"
