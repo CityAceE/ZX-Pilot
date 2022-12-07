@@ -1,5 +1,5 @@
 # ZX-Pilot
-ZX Spectrum 48 emulator for PalmOS written in MC68000 assembler
+ZX Spectrum 48 emulator for PalmOS written in MC68000 assembly.
 
 **build.bat** - launch it under Windows for emulator compilation
 
