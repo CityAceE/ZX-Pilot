@@ -1,9 +1,9 @@
                 Appl    "ZX-Pilot", 'ZXSp'
 
-                include "Sony.inc"
-                include "Palm4.inc"
+                include ".\include\Sony.inc"
+                include ".\include\Palm4.inc"
 ;               list    0
-                include "Startup.inc"
+                include ".\include\Startup.inc"
 
         data
 
@@ -139,9 +139,9 @@ pScreenX        dc.w    0               ;координата X пера
 pScreenY        dc.w    0               ;координата Y пера
 pPenDown        dc.w    0               ;есть ли касание экрана?
 
-parity          incbin  "parity.bin"    ;Таблица перекодирования флага чётности
-push_af         incbin  "push_af.bin"   ;Таблица перекодирования пары AF при записи
-pop_af          incbin  "pop_af.bin"    ;Таблица перекодирования пары AF при чтении
+parity          incbin  ".\assets\parity.bin"    ;Таблица перекодирования флага чётности
+push_af         incbin  ".\assets\push_af.bin"   ;Таблица перекодирования пары AF при записи
+pop_af          incbin  ".\assets\pop_af.bin"    ;Таблица перекодирования пары AF при чтении
                 include "instr_xx_tab.asm"
 
 
@@ -894,18 +894,18 @@ sna_transfer    move.b  (a0)+,(a4)+
 
 ;               list 0
 
-                res     'Talt',1000,"Talt03e8.bin"      ;Пришлите код
-                res     'Talt',1001,"Talt03e9.bin"      ;Диалог выхода
+                res     'Talt',1000,".\assets\Talt03e8.bin"      ;Пришлите код
+                res     'Talt',1001,".\assets\Talt03e9.bin"      ;Диалог выхода
 
-                res     'tAIn',100,"tAIN0064.bin"       ;Название программы
-                res     'tAIB',1000,"tAIB03e8.bin"      ;Иконки большие
-                res     'tAIB',1001,"tAIB03e9.bin"      ;Иконки маленькие
+                res     'tAIn',100,".\assets\tAIN0064.bin"       ;Название программы
+                res     'tAIB',1000,".\assets\tAIB03e8.bin"      ;Иконки большие
+                res     'tAIB',1001,".\assets\tAIB03e9.bin"      ;Иконки маленькие
 
-                res     'Tbmp',1,"Tbmp0001.bin"         ;Клавиатура для LoRes
-                res     'Tbmp',2,"Tbmp0002.bin"         ;Клавиатура для HiRes
-                res     'Tbmp',3,"Tbmp0003.bin"         ;Клавиатура для HE330
+                res     'Tbmp',1,".\assets\Tbmp0001.bin"         ;Клавиатура для LoRes
+                res     'Tbmp',2,".\assets\Tbmp0002.bin"         ;Клавиатура для HiRes
+                res     'Tbmp',3,".\assets\Tbmp0003.bin"         ;Клавиатура для HE330
 
-                res     'ROM',1000, "ROM03e8.bin"       ;Basic48
+                res     'ROM',1000, ".\assets\ROM03e8.bin"       ;Basic48
 
                 res     'tver', 1
                 dc.b    '0.6b', 0,0
