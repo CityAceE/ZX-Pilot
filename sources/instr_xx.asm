@@ -6,18 +6,18 @@
 ;       D3      xDxE
 ;       D4      xHxL
 
-;Флаговый регистр
-; Bit  Обозначение   Комментарии
+;Р¤Р»Р°РіРѕРІС‹Р№ СЂРµРіРёСЃС‚СЂ
+; Bit  РћР±РѕР·РЅР°С‡РµРЅРёРµ   РљРѕРјРјРµРЅС‚Р°СЂРёРё
 ;        Z80  M68K
 
-;  0      C    C     Флаг переноса
-;  1     P/V   V     Флаг четности/переполнения
-;  2      Z    Z     Флаг нуля
-;  3      S    N     Флаг знака
-;  4      3          *Недокументированный флаг
-;  5      5          *Недокументированный флаг
-;  6      N          *Флаг сложения/вычитания
-;  7      H          *Флаг полупереноса
+;  0      C    C     Р¤Р»Р°Рі РїРµСЂРµРЅРѕСЃР°
+;  1     P/V   V     Р¤Р»Р°Рі С‡РµС‚РЅРѕСЃС‚Рё/РїРµСЂРµРїРѕР»РЅРµРЅРёСЏ
+;  2      Z    Z     Р¤Р»Р°Рі РЅСѓР»СЏ
+;  3      S    N     Р¤Р»Р°Рі Р·РЅР°РєР°
+;  4      3          *РќРµРґРѕРєСѓРјРµРЅС‚РёСЂРѕРІР°РЅРЅС‹Р№ С„Р»Р°Рі
+;  5      5          *РќРµРґРѕРєСѓРјРµРЅС‚РёСЂРѕРІР°РЅРЅС‹Р№ С„Р»Р°Рі
+;  6      N          *Р¤Р»Р°Рі СЃР»РѕР¶РµРЅРёСЏ/РІС‹С‡РёС‚Р°РЅРёСЏ
+;  7      H          *Р¤Р»Р°Рі РїРѕР»СѓРїРµСЂРµРЅРѕСЃР°
 
 _00     ;NOP
                 addq.w  #4,d5
@@ -58,7 +58,7 @@ _04     ;INC B *
                 move.w  sr,d7           ;6
                 and.b   #%00001110,d7   ;4+4
                 and.b   #%10110001,d0   ;4+4
-                or.b    d7,d0           ;4+0 Итого 26
+                or.b    d7,d0           ;4+0 РС‚РѕРіРѕ 26
                 swap    d2
                 addq.w  #4,d5
                 bcc     kernel
@@ -112,7 +112,7 @@ _09     ;ADD HL,BC *
                 scs.b   d7              ;4/6
                 and.b   #1,d7           ;4+4
                 and.b   #%11111110,d0   ;4+4
-                or.b    d7,d0           ;4   всего 24 (CY=0) или 26 тактов
+                or.b    d7,d0           ;4   РІСЃРµРіРѕ 24 (CY=0) РёР»Рё 26 С‚Р°РєС‚РѕРІ
                 swap    d2
                 swap    d4
                 add.w   #11,d5
@@ -175,14 +175,14 @@ _10     ;DJNZ S
                 bne     _10nz
                 swap    d2
                 addq.l  #1,a1
-                addq.w  #8,d5    ;b=0 нет перехода
+                addq.w  #8,d5    ;b=0 РЅРµС‚ РїРµСЂРµС…РѕРґР°
                 bcc     kernel
                 bra     interrupt
 _10nz           swap    d2
                 move.b  (a1)+,d7
                 ext.w   d7
                 adda.w  d7,a1
-                add.w   #13,d5   ;b<>0 идем по ссылке
+                add.w   #13,d5   ;b<>0 РёРґРµРј РїРѕ СЃСЃС‹Р»РєРµ
                 bcc     kernel
                 bra     interrupt
 _11     ;LD DE,NN
@@ -361,7 +361,7 @@ _22     ;LD (NN),HL
                 move.l  d7,a0
 ;                cmp.w   #$4000,d7
 ;                bcs     _22wp1
-                move.b  d4,(a0)+ ;wp без плюса
+                move.b  d4,(a0)+ ;wp Р±РµР· РїР»СЋСЃР°
 ;_22wp1          addq    #1,a0
 ;                move.w  a0,d7
 ;                cmp.w   #$4000,d7
@@ -666,7 +666,7 @@ _3B     ;DEC SP
                 bcc     kernel
                 bra     interrupt
 _3C     ;INC A *
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 addq.b  #1,d1
                 move.w  sr,d7
                 and.b   #%00001110,d7
@@ -676,7 +676,7 @@ _3C     ;INC A *
                 bcc     kernel
                 bra     interrupt
 _3D     ;DEC A *
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 subq.b  #1,d1
                 move.w  sr,d7
                 and.b   #%00001110,d7
@@ -1155,7 +1155,7 @@ _76     ;HALT
 ;                move.l  #0-69888,d5
 ;                move.w  #(0-34944),d5
 
-;                move.l  #$1ffff,d5      ;в верхней половине 1, в нижней 
+;                move.l  #$1ffff,d5      ;РІ РІРµСЂС…РЅРµР№ РїРѕР»РѕРІРёРЅРµ 1, РІ РЅРёР¶РЅРµР№ 
 ;                addq.w  #4,d5
 ;                bcc     kernel
 ;                bra     interrupt
@@ -1165,7 +1165,7 @@ _76     ;HALT
 ;                bne     _76_no_im2
 ;		adda.l	#1,a1
 
-_76_no_im2      move.l  #$10000,d5      ;в верхней половине 1, в нижней 
+_76_no_im2      move.l  #$10000,d5      ;РІ РІРµСЂС…РЅРµР№ РїРѕР»РѕРІРёРЅРµ 1, РІ РЅРёР¶РЅРµР№ 
                 bra     interrupt
 
 
@@ -1240,7 +1240,7 @@ _7F     ;LD A,A
                 bcc     kernel
                 bra     interrupt
 _80     ;ADD A,B
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d2
                 add.b   d2,d1
                 move.w  sr,d7
@@ -1252,7 +1252,7 @@ _80     ;ADD A,B
                 bcc     kernel
                 bra     interrupt
 _81     ;ADD A,C
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 add.b   d2,d1
                 move.w  sr,d7
                 and.b   #%00001111,d7
@@ -1262,7 +1262,7 @@ _81     ;ADD A,C
                 bcc     kernel
                 bra     interrupt
 _82     ;ADD A,D
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d3
                 add.b   d3,d1
                 move.w  sr,d7
@@ -1274,7 +1274,7 @@ _82     ;ADD A,D
                 bcc     kernel
                 bra     interrupt
 _83     ;ADD A,E
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 add.b   d3,d1
                 move.w  sr,d7
                 and.b   #%00001111,d7
@@ -1284,7 +1284,7 @@ _83     ;ADD A,E
                 bcc     kernel
                 bra     interrupt
 _84     ;ADD A,H
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d4
                 add.b   d4,d1
                 move.w  sr,d7
@@ -1296,7 +1296,7 @@ _84     ;ADD A,H
                 bcc     kernel
                 bra     interrupt
 _85     ;ADD A,L
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 add.b   d4,d1
                 move.w  sr,d7
                 and.b   #%00001111,d7
@@ -1306,7 +1306,7 @@ _85     ;ADD A,L
                 bcc     kernel
                 bra     interrupt
 _86     ;ADD A,(HL)
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.l  a4,d7
                 move.b  d4,d6
                 swap    d4
@@ -1325,7 +1325,7 @@ _86     ;ADD A,(HL)
                 bcc     kernel
                 bra     interrupt
 _87     ;ADD A,A
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 add.b   d1,d1
                 move.w  sr,d7
                 and.b   #%00001111,d7
@@ -1335,7 +1335,7 @@ _87     ;ADD A,A
                 bcc     kernel
                 bra     interrupt
 _88     ;ADC A,B
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d2
                 move.b  d0,d7
                 and.b   #1,d7
@@ -1350,7 +1350,7 @@ _88     ;ADC A,B
                 bcc     kernel
                 bra     interrupt
 _89     ;ADC A,C
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d0,d7
                 and.b   #1,d7
                 lsr.b   #1,d7
@@ -1363,7 +1363,7 @@ _89     ;ADC A,C
                 bcc     kernel
                 bra     interrupt
 _8A     ;ADC A,D
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d3
                 move.b  d0,d7
                 and.b   #1,d7
@@ -1378,7 +1378,7 @@ _8A     ;ADC A,D
                 bcc     kernel
                 bra     interrupt
 _8B     ;ADC A,E
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d0,d7
                 and.b   #1,d7
                 lsr.b   #1,d7
@@ -1391,7 +1391,7 @@ _8B     ;ADC A,E
                 bcc     kernel
                 bra     interrupt
 _8C     ;ADC A,H
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d4
                 move.b  d0,d7
                 and.b   #1,d7
@@ -1406,7 +1406,7 @@ _8C     ;ADC A,H
                 bcc     kernel
                 bra     interrupt
 _8D     ;ADC A,L
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d0,d7
                 and.b   #1,d7
                 lsr.b   #1,d7
@@ -1419,7 +1419,7 @@ _8D     ;ADC A,L
                 bcc     kernel
                 bra     interrupt
 _8E     ;ADC A,(HL)
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.l  a4,d7
                 move.b  d4,d6
                 swap    d4
@@ -1441,7 +1441,7 @@ _8E     ;ADC A,(HL)
                 bcc     kernel
                 bra     interrupt
 _8F     ;ADC A,A
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d0,d7
                 and.b   #1,d7
                 lsr.b   #1,d7
@@ -1454,7 +1454,7 @@ _8F     ;ADC A,A
                 bcc     kernel
                 bra     interrupt
 _90     ;SUB B
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d2
                 sub.b   d2,d1
                 move.w  sr,d7
@@ -1466,7 +1466,7 @@ _90     ;SUB B
                 bcc     kernel
                 bra     interrupt
 _91     ;SUB C
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 sub.b   d2,d1
                 move.w  sr,d7
                 and.b   #%00001111,d7
@@ -1476,7 +1476,7 @@ _91     ;SUB C
                 bcc     kernel
                 bra     interrupt
 _92     ;SUB D
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d3
                 sub.b   d3,d1
                 move.w  sr,d7
@@ -1488,7 +1488,7 @@ _92     ;SUB D
                 bcc     kernel
                 bra     interrupt
 _93     ;SUB E
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 sub.b   d3,d1
                 move.w  sr,d7
                 and.b   #%00001111,d7
@@ -1498,7 +1498,7 @@ _93     ;SUB E
                 bcc     kernel
                 bra     interrupt
 _94     ;SUB H
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d4
                 sub.b   d4,d1
                 move.w  sr,d7
@@ -1510,7 +1510,7 @@ _94     ;SUB H
                 bcc     kernel
                 bra     interrupt
 _95     ;SUB L
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 sub.b   d4,d1
                 move.w  sr,d7
                 and.b   #%00001111,d7
@@ -1520,7 +1520,7 @@ _95     ;SUB L
                 bcc     kernel
                 bra     interrupt
 _96     ;SUB (HL)
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.l  a4,d7
                 move.b  d4,d6
                 swap    d4
@@ -1539,7 +1539,7 @@ _96     ;SUB (HL)
                 bcc     kernel
                 bra     interrupt
 _97     ;SUB A
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 sub.b   d1,d1
                 move.w  sr,d7
                 and.b   #%00001111,d7
@@ -1549,7 +1549,7 @@ _97     ;SUB A
                 bcc     kernel
                 bra     interrupt
 _98     ;SBC A,B
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d2
                 move.b  d0,d7
                 and.b   #1,d7
@@ -1564,7 +1564,7 @@ _98     ;SBC A,B
                 bcc     kernel
                 bra     interrupt
 _99     ;SBC A,C
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d0,d7
                 and.b   #1,d7
                 lsr.b   #1,d7
@@ -1577,7 +1577,7 @@ _99     ;SBC A,C
                 bcc     kernel
                 bra     interrupt
 _9A     ;SBC A,D
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d3
                 move.b  d0,d7
                 and.b   #1,d7
@@ -1592,7 +1592,7 @@ _9A     ;SBC A,D
                 bcc     kernel
                 bra     interrupt
 _9B     ;SBC A,E
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d0,d7
                 and.b   #1,d7
                 lsr.b   #1,d7
@@ -1605,7 +1605,7 @@ _9B     ;SBC A,E
                 bcc     kernel
                 bra     interrupt
 _9C     ;SBC A,H
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d4
                 move.b  d0,d7
                 and.b   #1,d7
@@ -1620,7 +1620,7 @@ _9C     ;SBC A,H
                 bcc     kernel
                 bra     interrupt
 _9D     ;SBC A,L
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d0,d7
                 and.b   #1,d7
                 lsr.b   #1,d7
@@ -1633,7 +1633,7 @@ _9D     ;SBC A,L
                 bcc     kernel
                 bra     interrupt
 _9E     ;SBC A,(HL)
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.l  a4,d7
                 move.b  d4,d6
                 swap    d4
@@ -1655,7 +1655,7 @@ _9E     ;SBC A,(HL)
                 bcc     kernel
                 bra     interrupt
 _9F     ;SBC A,A
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d0,d7
                 and.b   #1,d7
                 lsr.b   #1,d7
@@ -1673,10 +1673,10 @@ _A0     ;AND B
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 swap    d2
                 addq.w  #4,d5
@@ -1687,10 +1687,10 @@ _A1     ;AND C
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #4,d5
                 bcc     kernel
@@ -1701,10 +1701,10 @@ _A2     ;AND D
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 swap    d3
                 addq.w  #4,d5
@@ -1715,10 +1715,10 @@ _A3     ;AND E
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #4,d5
                 bcc     kernel
@@ -1729,10 +1729,10 @@ _A4     ;AND H
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 swap    d4
                 addq.w  #4,d5
@@ -1743,10 +1743,10 @@ _A5     ;AND L
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #4,d5
                 bcc     kernel
@@ -1765,10 +1765,10 @@ _A6     ;AND (HL)
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #7,d5
                 bcc     kernel
@@ -1778,10 +1778,10 @@ _A7     ;AND A
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #4,d5
                 bcc     kernel
@@ -1792,10 +1792,10 @@ _A8     ;XOR B
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 swap    d2
                 addq.w  #4,d5
@@ -1806,10 +1806,10 @@ _A9     ;XOR C
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #4,d5
                 bcc     kernel
@@ -1820,10 +1820,10 @@ _AA     ;XOR D
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 swap    d3
                 addq.w  #4,d5
@@ -1834,10 +1834,10 @@ _AB     ;XOR E
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #4,d5
                 bcc     kernel
@@ -1848,10 +1848,10 @@ _AC     ;XOR H
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 swap    d4
                 addq.w  #4,d5
@@ -1862,10 +1862,10 @@ _AD     ;XOR L
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #4,d5
                 bcc     kernel
@@ -1884,10 +1884,10 @@ _AE     ;XOR (HL)
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #7,d5
                 bcc     kernel
@@ -1897,10 +1897,10 @@ _AF     ;XOR A
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #4,d5
                 bcc     kernel
@@ -1911,10 +1911,10 @@ _B0     ;OR B
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 swap    d2
                 addq.w  #4,d5
@@ -1925,10 +1925,10 @@ _B1     ;OR C
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #4,d5
                 bcc     kernel
@@ -1939,10 +1939,10 @@ _B2     ;OR D
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 swap    d3
                 addq.w  #4,d5
@@ -1953,10 +1953,10 @@ _B3     ;OR E
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #4,d5
                 bcc     kernel
@@ -1967,10 +1967,10 @@ _B4     ;OR H
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 swap    d4
                 addq.w  #4,d5
@@ -1981,10 +1981,10 @@ _B5     ;OR L
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #4,d5
                 bcc     kernel
@@ -2003,10 +2003,10 @@ _B6     ;OR (HL)
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #7,d5
                 bcc     kernel
@@ -2016,10 +2016,10 @@ _B7     ;OR A
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #4,d5
                 bcc     kernel
@@ -2228,7 +2228,7 @@ _C5wp2          add.w   #11,d5
                 bcc     kernel
                 bra     interrupt
 _C6     ;ADD A,N
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  (a1)+,d6
                 add.b   d6,d1
                 move.w  sr,d7
@@ -2236,7 +2236,7 @@ _C6     ;ADD A,N
                 and.b   #%10110000,d0
                 or.b    d7,d0
 
-;                or.b    #%110000,d0        ;Для Ghost'N'Goblins
+;                or.b    #%110000,d0        ;Р”Р»СЏ Ghost'N'Goblins
 
                 addq.w  #7,d5
                 bcc     kernel
@@ -2320,7 +2320,7 @@ _CB     ;PREFIX
                 add.w   d6,d6
                 move.w  (a2,d6.w),d7
                 jmp     (a3,d7.w)
-_CC     ;CALL Z,NN ;ВОзможно здесь накосячил
+_CC     ;CALL Z,NN ;Р’РћР·РјРѕР¶РЅРѕ Р·РґРµСЃСЊ РЅР°РєРѕСЃСЏС‡РёР»
                 move.l  a1,d6
                 move.b  (a1)+,d7
                 move.b  (a1)+,d6
@@ -2379,7 +2379,7 @@ _CDwp2          move.l  d6,a1
                 bcc     kernel
                 bra     interrupt
 _CE     ;ADC A,N
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  (a1)+,d6
                 move.b  d0,d7
                 and.b   #1,d7
@@ -2465,10 +2465,10 @@ _D2c            add.w   #10,d5
                 bra     interrupt
 
 ;                data
-;SndCommandPtr           dc.b    1,0     ;Команда sndCmdFreqDurationAmp и ноль
-;                        dc.l    10000       ;Частота Hz
-;                        dc.w    1    ;Длительность ms
-;                        dc.w    64      ;Громкость
+;SndCommandPtr           dc.b    1,0     ;РљРѕРјР°РЅРґР° sndCmdFreqDurationAmp Рё РЅРѕР»СЊ
+;                        dc.l    10000       ;Р§Р°СЃС‚РѕС‚Р° Hz
+;                        dc.w    1    ;Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ ms
+;                        dc.w    64      ;Р“СЂРѕРјРєРѕСЃС‚СЊ
 ;                code
 
 
@@ -2560,7 +2560,7 @@ _D5wp2          add.w   #11,d5
                 bcc     kernel
                 bra     interrupt
 _D6     ;SUB N
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  (a1)+,d6
                 sub.b   d6,d1
                 move.w  sr,d7
@@ -2748,7 +2748,7 @@ _DD     ;BEFORE IX
                 move.w  (a2,d6.w),d7
                 jmp     (a3,d7.w)
 _DE     ;SBC A,N
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  (a1)+,d6
                 move.b  d0,d7
                 and.b   #1,d7
@@ -2913,10 +2913,10 @@ _E6     ;AND N
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #7,d5
                 bcc     kernel
@@ -3041,10 +3041,10 @@ _EE     ;XOR N
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%00110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #7,d5
                 bcc     kernel
@@ -3179,10 +3179,10 @@ _F6     ;OR N
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%00110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #7,d5
                 bcc     kernel
@@ -3347,10 +3347,10 @@ _CB00   ;RLC B
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d2
                 addq.w  #8,d5
                 bcc     kernel
@@ -3361,10 +3361,10 @@ _CB01   ;RLC C
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3375,10 +3375,10 @@ _CB02   ;RLC D
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d3,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d3,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d3
                 addq.w  #8,d5
                 bcc     kernel
@@ -3389,10 +3389,10 @@ _CB03   ;RLC E
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d3,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d3,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3403,10 +3403,10 @@ _CB04   ;RLC H
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d4,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d4,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d4
                 addq.w  #8,d5
                 bcc     kernel
@@ -3417,10 +3417,10 @@ _CB05   ;RLC L
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d4,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d4,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3442,10 +3442,10 @@ _CB06   ;RLC (HL)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -3454,10 +3454,10 @@ _CB06wp         rol.b   #1,d6
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -3467,10 +3467,10 @@ _CB07   ;RLC A
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3481,10 +3481,10 @@ _CB08   ;RRC B
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d2
                 addq.w  #8,d5
                 bcc     kernel
@@ -3495,10 +3495,10 @@ _CB09   ;RRC C
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3509,10 +3509,10 @@ _CB0A   ;RRC D
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d3,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d3,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d3
                 addq.w  #8,d5
                 bcc     kernel
@@ -3523,10 +3523,10 @@ _CB0B   ;RRC E
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d3,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d3,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3537,10 +3537,10 @@ _CB0C   ;RRC H
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d4,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d4,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d4
                 addq.w  #8,d5
                 bcc     kernel
@@ -3551,10 +3551,10 @@ _CB0D   ;RRC L
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d4,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d4,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3576,10 +3576,10 @@ _CB0E   ;RRC (HL)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -3588,10 +3588,10 @@ _CB0Ewp         ror.b   #1,d6
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -3601,10 +3601,10 @@ _CB0F   ;RRC A
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3617,10 +3617,10 @@ _CB10   ;RL B
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d2
                 addq.w  #8,d5
                 bcc     kernel
@@ -3633,10 +3633,10 @@ _CB11   ;RL C
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3649,10 +3649,10 @@ _CB12   ;RL D
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d3
                 addq.w  #8,d5
                 bcc     kernel
@@ -3665,10 +3665,10 @@ _CB13   ;RL E
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3681,10 +3681,10 @@ _CB14   ;RL H
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d4
                 addq.w  #8,d5
                 bcc     kernel
@@ -3697,10 +3697,10 @@ _CB15   ;RL L
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3724,10 +3724,10 @@ _CB16   ;RL (HL)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -3738,10 +3738,10 @@ _CB16wp         move.b  d0,d7
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -3753,10 +3753,10 @@ _CB17   ;RL A
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3769,10 +3769,10 @@ _CB18   ;RR B
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d2
                 addq.w  #8,d5
                 bcc     kernel
@@ -3785,10 +3785,10 @@ _CB19   ;RR C
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3801,10 +3801,10 @@ _CB1A   ;RR D
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d3
                 addq.w  #8,d5
                 bcc     kernel
@@ -3817,10 +3817,10 @@ _CB1B   ;RR E
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3833,10 +3833,10 @@ _CB1C   ;RR H
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d4
                 addq.w  #8,d5
                 bcc     kernel
@@ -3849,10 +3849,10 @@ _CB1D   ;RR L
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3876,10 +3876,10 @@ _CB1E   ;RR (HL)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -3890,10 +3890,10 @@ _CB1Ewp         move.b  d0,d7
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -3905,10 +3905,10 @@ _CB1F   ;RR A
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3919,10 +3919,10 @@ _CB20   ;SLA B
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d2
                 addq.w  #8,d5
                 bcc     kernel
@@ -3933,10 +3933,10 @@ _CB21   ;SLA C
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3947,10 +3947,10 @@ _CB22   ;SLA D
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d3,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d3,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d3
                 addq.w  #8,d5
                 bcc     kernel
@@ -3961,10 +3961,10 @@ _CB23   ;SLA E
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d3,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d3,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -3975,10 +3975,10 @@ _CB24   ;SLA H
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d4,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d4,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d4
                 addq.w  #8,d5
                 bcc     kernel
@@ -3989,10 +3989,10 @@ _CB25   ;SLA L
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d4,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d4,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -4014,10 +4014,10 @@ _CB26   ;SLA (HL)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -4026,10 +4026,10 @@ _CB26wp         asl.b   #1,d6
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -4039,10 +4039,10 @@ _CB27   ;SLA A
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -4053,10 +4053,10 @@ _CB28   ;SRA B
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d2
                 addq.w  #8,d5
                 bcc     kernel
@@ -4067,10 +4067,10 @@ _CB29   ;SRA C
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -4081,10 +4081,10 @@ _CB2A   ;SRA D
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d3,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d3,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d3
                 addq.w  #8,d5
                 bcc     kernel
@@ -4095,10 +4095,10 @@ _CB2B   ;SRA E
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d3,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d3,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -4109,10 +4109,10 @@ _CB2C   ;SRA H
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d4,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d4,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d4
                 addq.w  #8,d5
                 bcc     kernel
@@ -4123,10 +4123,10 @@ _CB2D   ;SRA L
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d4,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d4,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -4148,10 +4148,10 @@ _CB2E   ;SRA (HL)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -4160,10 +4160,10 @@ _CB2Ewp         asr.b   #1,d6
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -4173,10 +4173,10 @@ _CB2F   ;SRA A
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -4188,10 +4188,10 @@ _CB30   ;SLI B
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d2
                 addq.w  #8,d5
                 bcc     kernel
@@ -4203,10 +4203,10 @@ _CB31   ;SLI C
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -4218,10 +4218,10 @@ _CB32   ;SLI D
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d3,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d3,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d3
                 addq.w  #8,d5
                 bcc     kernel
@@ -4233,10 +4233,10 @@ _CB33   ;SLI E
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d3,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d3,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -4248,10 +4248,10 @@ _CB34   ;SLI H
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d4,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d4,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d4
                 addq.w  #8,d5
                 bcc     kernel
@@ -4263,10 +4263,10 @@ _CB35   ;SLI L
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d4,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d4,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -4289,10 +4289,10 @@ _CB36   ;SLI (HL)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -4301,10 +4301,10 @@ _CB36wp         lsl.b   #1,d6
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -4315,10 +4315,10 @@ _CB37   ;SLI A
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -4329,10 +4329,10 @@ _CB38   ;SRL B
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d2
                 addq.w  #8,d5
                 bcc     kernel
@@ -4343,10 +4343,10 @@ _CB39   ;SRL C
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d2,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d2,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -4357,10 +4357,10 @@ _CB3A   ;SRL D
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d3,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d3,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d3
                 addq.w  #8,d5
                 bcc     kernel
@@ -4371,10 +4371,10 @@ _CB3B   ;SRL E
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d3,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d3,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -4385,10 +4385,10 @@ _CB3C   ;SRL H
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d4,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d4,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 swap    d4
                 addq.w  #8,d5
                 bcc     kernel
@@ -4399,10 +4399,10 @@ _CB3D   ;SRL L
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d4,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d4,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -4424,10 +4424,10 @@ _CB3E   ;SRL (HL)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -4436,10 +4436,10 @@ _CB3Ewp         lsr.b   #1,d6
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -4449,10 +4449,10 @@ _CB3F   ;SRL A
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
@@ -6220,11 +6220,11 @@ _ED42   ;SBC HL,BC
                 and.b   #%00001011,d7
                 and.b   #%10110000,d0
                 or.b    d7,d0
-                and.l   #$ff00ff,d2     ;строка для корректной работы игры Movie
-                and.l   #$ff00ff,d4     ;для определения флага Z
-                move.w  sr,d7           ;для определения флага Z
-                and.b   #%00000100,d7   ;для определения флага Z
-                or.b    d7,d0           ;для определения флага Z
+                and.l   #$ff00ff,d2     ;СЃС‚СЂРѕРєР° РґР»СЏ РєРѕСЂСЂРµРєС‚РЅРѕР№ СЂР°Р±РѕС‚С‹ РёРіСЂС‹ Movie
+                and.l   #$ff00ff,d4     ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                move.w  sr,d7           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                and.b   #%00000100,d7   ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                or.b    d7,d0           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -6250,7 +6250,7 @@ _ED43wp2        add.w   #20,d5
                 bcc     kernel
                 bra     interrupt
 _ED44   ;NEG
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d1,d6
                 move.w  #0,d1
                 sub.b   d6,d1
@@ -6395,10 +6395,10 @@ _ED4A   ;ADC HL,BC
                 and.b   #%00001011,d7
                 and.b   #%10110000,d0
                 or.b    d7,d0
-                and.l   #$ff00ff,d4     ;для определения флага Z
-                move.w  sr,d7           ;для определения флага Z
-                and.b   #%00000100,d7   ;для определения флага Z
-                or.b    d7,d0           ;для определения флага Z
+                and.l   #$ff00ff,d4     ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                move.w  sr,d7           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                and.b   #%00000100,d7   ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                or.b    d7,d0           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -6417,7 +6417,7 @@ _ED4B   ;LD BC,(NN)
                 bcc     kernel
                 bra     interrupt
 _ED4C   ;NEG
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d1,d6
                 move.w  #0,d1
                 sub.b   d6,d1
@@ -6573,10 +6573,10 @@ _ED52   ;SBC HL,DE
                 and.b   #%00001011,d7
                 and.b   #%10110000,d0
                 or.b    d7,d0
-                and.l   #$ff00ff,d4     ;для определения флага Z
-                move.w  sr,d7           ;для определения флага Z
-                and.b   #%00000100,d7   ;для определения флага Z
-                or.b    d7,d0           ;для определения флага Z
+                and.l   #$ff00ff,d4     ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                move.w  sr,d7           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                and.b   #%00000100,d7   ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                or.b    d7,d0           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -6602,7 +6602,7 @@ _ED53wp2        add.w   #20,d5
                 bcc     kernel
                 bra     interrupt
 _ED54   ;NEG
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d1,d6
                 move.w  #0,d1
                 sub.b   d6,d1
@@ -6754,10 +6754,10 @@ _ED5A   ;ADC HL,DE
                 and.b   #%00001011,d7
                 and.b   #%10110000,d0
                 or.b    d7,d0
-                and.l   #$ff00ff,d4     ;для определения флага Z
-                move.w  sr,d7           ;для определения флага Z
-                and.b   #%00000100,d7   ;для определения флага Z
-                or.b    d7,d0           ;для определения флага Z
+                and.l   #$ff00ff,d4     ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                move.w  sr,d7           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                and.b   #%00000100,d7   ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                or.b    d7,d0           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -6776,7 +6776,7 @@ _ED5B   ;LD DE,(NN)
                 bcc     kernel
                 bra     interrupt
 _ED5C   ;NEG
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d1,d6
                 move.w  #0,d1
                 sub.b   d6,d1
@@ -6940,10 +6940,10 @@ _ED62   ;SBC HL,HL
                 and.b   #%00001011,d7
                 and.b   #%10110000,d0
                 or.b    d7,d0
-                and.l   #$ff00ff,d4     ;для определения флага Z
-                move.w  sr,d7           ;для определения флага Z
-                and.b   #%00000100,d7   ;для определения флага Z
-                or.b    d7,d0           ;для определения флага Z
+                and.l   #$ff00ff,d4     ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                move.w  sr,d7           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                and.b   #%00000100,d7   ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                or.b    d7,d0           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -6968,7 +6968,7 @@ _ED63wp2        add.w   #20,d5
                 bcc     kernel
                 bra     interrupt
 _ED64   ;NEG
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d1,d6
                 move.w  #0,d1
                 sub.b   d6,d1
@@ -7000,7 +7000,7 @@ _ED66   ;IM 0
                 addq.w  #8,d5
                 bcc     kernel
                 bra     interrupt
-_ED67   ;RRD    Здесь впервые более оптимальный перегон рег. пары
+_ED67   ;RRD    Р—РґРµСЃСЊ РІРїРµСЂРІС‹Рµ Р±РѕР»РµРµ РѕРїС‚РёРјР°Р»СЊРЅС‹Р№ РїРµСЂРµРіРѕРЅ СЂРµРі. РїР°СЂС‹
                 move.l  a1,d7
                 swap    d4
                 move.b  d4,-(a7)
@@ -7029,10 +7029,10 @@ _ED67   ;RRD    Здесь впервые более оптимальный перегон рег. пары
 _ED67wp         move.w  sr,d7
                 and.b   #%00001100,d7
                 and.b   #%00110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 add.w   #18,d5
                 bcc     kernel
@@ -7141,10 +7141,10 @@ _ED6A   ;ADC HL,HL
                 and.b   #%00001011,d7
                 and.b   #%10110000,d0
                 or.b    d7,d0
-                and.l   #$ff00ff,d4     ;для определения флага Z
-                move.w  sr,d7           ;для определения флага Z
-                and.b   #%00000100,d7   ;для определения флага Z
-                or.b    d7,d0           ;для определения флага Z
+                and.l   #$ff00ff,d4     ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                move.w  sr,d7           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                and.b   #%00000100,d7   ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                or.b    d7,d0           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -7163,7 +7163,7 @@ _ED6B   ;LD HL,(NN)
                 bcc     kernel
                 bra     interrupt
 _ED6C   ;NEG
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d1,d6
                 move.w  #0,d1
                 sub.b   d6,d1
@@ -7222,10 +7222,10 @@ _ED6Fwp         swap    d7
                 move.w  sr,d7
                 and.b   #%00001100,d7
                 and.b   #%00110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 add.w   #18,d5
                 bcc     kernel
@@ -7274,10 +7274,10 @@ _ED72   ;SBC HL,SP
                 and.b   #%00001011,d7
                 and.b   #%10110000,d0
                 or.b    d7,d0
-                and.l   #$ff00ff,d4     ;для определения флага Z
-                move.w  sr,d7           ;для определения флага Z
-                and.b   #%00000100,d7   ;для определения флага Z
-                or.b    d7,d0           ;для определения флага Z
+                and.l   #$ff00ff,d4     ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                move.w  sr,d7           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                and.b   #%00000100,d7   ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                or.b    d7,d0           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -7302,7 +7302,7 @@ _ED73wp2        add.w   #20,d5
                 bcc     kernel
                 bra     interrupt
 _ED74   ;NEG
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d1,d6
                 move.w  #0,d1
                 sub.b   d6,d1
@@ -7449,10 +7449,10 @@ _ED7A   ;ADC HL,SP
                 and.b   #%00001011,d7
                 and.b   #%10110000,d0
                 or.b    d7,d0
-                and.l   #$ff00ff,d4     ;для определения флага Z
-                move.w  sr,d7           ;для определения флага Z
-                and.b   #%00000100,d7   ;для определения флага Z
-                or.b    d7,d0           ;для определения флага Z
+                and.l   #$ff00ff,d4     ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                move.w  sr,d7           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                and.b   #%00000100,d7   ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
+                or.b    d7,d0           ;РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С„Р»Р°РіР° Z
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -7473,7 +7473,7 @@ _ED7B   ;LD SP,(NN)
                 bcc     kernel
                 bra     interrupt
 _ED7C   ;NEG
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d1,d6
                 move.w  #0,d1
                 sub.b   d6,d1
@@ -8710,7 +8710,7 @@ _DD5F
 
 _DD60   ;LD HX,B
                 swap    d2
-                move.b  d2,-(a7)        ;более быстрый аналог
+                move.b  d2,-(a7)        ;Р±РѕР»РµРµ Р±С‹СЃС‚СЂС‹Р№ Р°РЅР°Р»РѕРі
                 move.w  (a7)+,d6        ;lsl.w   #8,d6
                 swap    d2
                 swap    d0
@@ -8721,7 +8721,7 @@ _DD60   ;LD HX,B
                 bcc     kernel
                 bra     interrupt
 _DD61   ;LD HX,C
-                move.b  d2,-(a7)        ;более быстрый аналог
+                move.b  d2,-(a7)        ;Р±РѕР»РµРµ Р±С‹СЃС‚СЂС‹Р№ Р°РЅР°Р»РѕРі
                 move.w  (a7)+,d6        ;lsl.w   #8,d6
                 swap    d0
                 move.b  d0,d6
@@ -8732,7 +8732,7 @@ _DD61   ;LD HX,C
                 bra     interrupt
 _DD62   ;LD HX,D
                 swap    d3
-                move.b  d3,-(a7)        ;более быстрый аналог
+                move.b  d3,-(a7)        ;Р±РѕР»РµРµ Р±С‹СЃС‚СЂС‹Р№ Р°РЅР°Р»РѕРі
                 move.w  (a7)+,d6        ;lsl.w   #8,d6
                 swap    d3
                 swap    d0
@@ -8743,7 +8743,7 @@ _DD62   ;LD HX,D
                 bcc     kernel
                 bra     interrupt
 _DD63   ;LD HX,E
-                move.b  d3,-(a7)        ;более быстрый аналог
+                move.b  d3,-(a7)        ;Р±РѕР»РµРµ Р±С‹СЃС‚СЂС‹Р№ Р°РЅР°Р»РѕРі
                 move.w  (a7)+,d6        ;lsl.w   #8,d6
                 swap    d0
                 move.b  d0,d6
@@ -8782,7 +8782,7 @@ _DD66   ;LD H,(IX+S)
                 bcc     kernel
                 bra     interrupt
 _DD67   ;LD HX,A
-                move.b  d1,-(a7)        ;более быстрый аналог
+                move.b  d1,-(a7)        ;Р±РѕР»РµРµ Р±С‹СЃС‚СЂС‹Р№ Р°РЅР°Р»РѕРі
                 move.w  (a7)+,d6        ;lsl.w   #8,d6
                 swap    d0
                 move.b  d0,d6
@@ -9044,7 +9044,7 @@ _DD83
                 move.l  #$dd83,d7
                 bra     no_instr
 _DD84   ;ADD A,HX
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d0
                 move.w  d0,d6
                 lsr.w   #8,d6
@@ -9058,7 +9058,7 @@ _DD84   ;ADD A,HX
                 bcc     kernel
                 bra     interrupt
 _DD85   ;ADD A,LX
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d0
                 add.b   d0,d1
                 move.w  sr,d7
@@ -9070,7 +9070,7 @@ _DD85   ;ADD A,LX
                 bcc     kernel
                 bra     interrupt
 _DD86   ;ADD A,(IX+S)
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d0
                 move.l  a4,d7
                 move.w  d0,d7
@@ -9109,7 +9109,7 @@ _DD8B
                 move.l  #$dd8b,d7
                 bra     no_instr
 _DD8C   ;ADC A,HX
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d0,d7
                 swap    d0
                 move.w  d0,d6
@@ -9126,7 +9126,7 @@ _DD8C   ;ADC A,HX
                 bcc     kernel
                 bra     interrupt
 _DD8D   ;ADC A,LX
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d0,d7
                 swap    d0
                 and.b   #1,d7
@@ -9141,7 +9141,7 @@ _DD8D   ;ADC A,LX
                 bcc     kernel
                 bra     interrupt
 _DD8E   ;ADC A,(IX+S)
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d0
                 move.l  a4,d7
                 move.w  d0,d7
@@ -9184,7 +9184,7 @@ _DD93
                 move.l  #$dd93,d7
                 bra     no_instr
 _DD94   ;SUB HX
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d0
                 move.w  d0,d6
                 lsr.w   #8,d6
@@ -9198,7 +9198,7 @@ _DD94   ;SUB HX
                 bcc     kernel
                 bra     interrupt
 _DD95   ;SUB LX
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d0
                 sub.b   d0,d1
                 move.w  sr,d7
@@ -9210,7 +9210,7 @@ _DD95   ;SUB LX
                 bcc     kernel
                 bra     interrupt
 _DD96   ;SUB (IX+S)
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d0
                 move.l  a4,d7
                 move.w  d0,d7
@@ -9249,7 +9249,7 @@ _DD9B
                 move.l  #$dd9b,d7
                 bra     no_instr
 _DD9C   ;SBC A,HX
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d0,d7
                 swap    d0
                 move.w  d0,d6
@@ -9266,7 +9266,7 @@ _DD9C   ;SBC A,HX
                 bcc     kernel
                 bra     interrupt
 _DD9D   ;SBC A,LX
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 move.b  d0,d7
                 swap    d0
                 and.b   #1,d7
@@ -9281,7 +9281,7 @@ _DD9D   ;SBC A,LX
                 bcc     kernel
                 bra     interrupt
 _DD9E   ;SBC A,(IX+S)
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d0
                 move.l  a4,d7
                 move.w  d0,d7
@@ -9329,10 +9329,10 @@ _DDA4   ;AND HX
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #8,d5
                 bcc     kernel
@@ -9344,10 +9344,10 @@ _DDA5   ;AND LX
                 swap    d0
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #8,d5
                 bcc     kernel
@@ -9366,10 +9366,10 @@ _DDA6   ;AND (IX+S)
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 add.w   #19,d5
                 bcc     kernel
@@ -9403,10 +9403,10 @@ _DDAC   ;XOR HX
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #8,d5
                 bcc     kernel
@@ -9418,10 +9418,10 @@ _DDAD   ;XOR LX
                 swap    d0
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #8,d5
                 bcc     kernel
@@ -9440,10 +9440,10 @@ _DDAE   ;XOR (IX+S)
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 add.w   #19,d5
                 bcc     kernel
@@ -9478,10 +9478,10 @@ _DDB4   ;OR HX
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #8,d5
                 bcc     kernel
@@ -9493,10 +9493,10 @@ _DDB5   ;OR LX
                 swap    d0
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #8,d5
                 bcc     kernel
@@ -9515,10 +9515,10 @@ _DDB6   ;OR (IX+S)
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 add.w   #19,d5
                 bcc     kernel
@@ -10610,7 +10610,7 @@ _FD5F
 
 _FD60   ;LD HY,B
                 swap    d2
-                move.b  d2,-(a7)        ;более быстрый аналог
+                move.b  d2,-(a7)        ;Р±РѕР»РµРµ Р±С‹СЃС‚СЂС‹Р№ Р°РЅР°Р»РѕРі
                 move.w  (a7)+,d6        ;lsl.w   #8,d6
                 swap    d2
                 swap    d1
@@ -10621,7 +10621,7 @@ _FD60   ;LD HY,B
                 bcc     kernel
                 bra     interrupt
 _FD61   ;LD HY,C
-                move.b  d2,-(a7)        ;более быстрый аналог
+                move.b  d2,-(a7)        ;Р±РѕР»РµРµ Р±С‹СЃС‚СЂС‹Р№ Р°РЅР°Р»РѕРі
                 move.w  (a7)+,d6        ;lsl.w   #8,d6
                 swap    d1
                 move.b  d1,d6
@@ -10632,7 +10632,7 @@ _FD61   ;LD HY,C
                 bra     interrupt
 _FD62   ;LD HY,D
                 swap    d3
-                move.b  d3,-(a7)        ;более быстрый аналог
+                move.b  d3,-(a7)        ;Р±РѕР»РµРµ Р±С‹СЃС‚СЂС‹Р№ Р°РЅР°Р»РѕРі
                 move.w  (a7)+,d6        ;lsl.w   #8,d6
                 swap    d3
                 swap    d1
@@ -10643,7 +10643,7 @@ _FD62   ;LD HY,D
                 bcc     kernel
                 bra     interrupt
 _FD63   ;LD HY,E
-                move.b  d3,-(a7)        ;более быстрый аналог
+                move.b  d3,-(a7)        ;Р±РѕР»РµРµ Р±С‹СЃС‚СЂС‹Р№ Р°РЅР°Р»РѕРі
                 move.w  (a7)+,d6        ;lsl.w   #8,d6
                 swap    d1
                 move.b  d1,d6
@@ -10682,7 +10682,7 @@ _FD66   ;LD H,(IY+S)
                 bcc     kernel
                 bra     interrupt
 _FD67   ;LD HY,A
-                move.b  d1,-(a7)        ;более быстрый аналог
+                move.b  d1,-(a7)        ;Р±РѕР»РµРµ Р±С‹СЃС‚СЂС‹Р№ Р°РЅР°Р»РѕРі
                 move.w  (a7)+,d6        ;lsl.w   #8,d6
                 swap    d1
                 move.b  d1,d6
@@ -10947,7 +10947,7 @@ _FD83
                 move.l  #$fd83,d7
                 bra     no_instr
 _FD84   ;ADD A,HX
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d1
                 move.w  d1,d6
                 lsr.w   #8,d6
@@ -10961,7 +10961,7 @@ _FD84   ;ADD A,HX
                 bcc     kernel
                 bra     interrupt
 _FD85   ;ADD A,LY
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d1
                 move.b  d1,d6
                 swap    d1        
@@ -10974,7 +10974,7 @@ _FD85   ;ADD A,LY
                 bcc     kernel
                 bra     interrupt
 _FD86   ;ADD A,(IY+S)
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d1
                 move.l  a4,d7
                 move.w  d1,d7
@@ -11013,7 +11013,7 @@ _FD8B
                 move.l  #$fd8b,d7
                 bra     no_instr
 _FD8C   ;ADC A,HY
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d1
                 move.w  d1,d6
                 swap    d1
@@ -11030,7 +11030,7 @@ _FD8C   ;ADC A,HY
                 bcc     kernel
                 bra     interrupt
 _FD8D   ;ADC A,LY
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d1
                 move.b  d1,d6
                 swap    d1
@@ -11046,7 +11046,7 @@ _FD8D   ;ADC A,LY
                 bcc     kernel
                 bra     interrupt
 _FD8E   ;ADC A,(IY+S)
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d1
                 move.l  a4,d7
                 move.w  d1,d7
@@ -11089,7 +11089,7 @@ _FD93
                 move.l  #$fd93,d7
                 bra     no_instr
 _FD94   ;SUB HY
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d1
                 move.w  d1,d6
                 lsr.w   #8,d6                
@@ -11103,7 +11103,7 @@ _FD94   ;SUB HY
                 bcc     kernel
                 bra     interrupt
 _FD95   ;SUB LY
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d1
                 move.b  d1,d6
                 swap    d1
@@ -11116,7 +11116,7 @@ _FD95   ;SUB LY
                 bcc     kernel
                 bra     interrupt
 _FD96   ;SUB (IY+S)
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d1
                 move.l  a4,d7
                 move.w  d1,d7
@@ -11155,7 +11155,7 @@ _FD9B
                 move.l  #$fd9b,d7
                 bra     no_instr
 _FD9C   ;SBC A,HY
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d1
                 move.w  d1,d6
                 swap    d1
@@ -11172,7 +11172,7 @@ _FD9C   ;SBC A,HY
                 bcc     kernel
                 bra     interrupt
 _FD9D   ;SBC A,LY
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d1
                 move.b  d1,d6
                 swap    d1
@@ -11188,7 +11188,7 @@ _FD9D   ;SBC A,LY
                 bcc     kernel
                 bra     interrupt
 _FD9E   ;SBC A,(IY+S)
-                move.b  d1,DAA(a5)     ;Для эмуляции DAA
+                move.b  d1,DAA(a5)     ;Р”Р»СЏ СЌРјСѓР»СЏС†РёРё DAA
                 swap    d1
                 move.l  a4,d7
                 move.w  d1,d7
@@ -11239,10 +11239,10 @@ _FDA4   ;AND HY
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #8,d5
                 bcc     kernel
@@ -11256,10 +11256,10 @@ _FDA5   ;AND LY
                 swap    d0
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #8,d5
                 bcc     kernel
@@ -11278,10 +11278,10 @@ _FDA6   ;AND (IY+S)
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 add.w   #19,d5
                 bcc     kernel
@@ -11315,10 +11315,10 @@ _FDAC   ;XOR HY
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #8,d5
                 bcc     kernel
@@ -11331,10 +11331,10 @@ _FDAD   ;XOR LY
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #8,d5
                 bcc     kernel
@@ -11353,10 +11353,10 @@ _FDAE   ;XOR (IY+S)
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 add.w   #19,d5
                 bcc     kernel
@@ -11391,10 +11391,10 @@ _FDB4   ;OR HY
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #8,d5
                 bcc     kernel
@@ -11407,10 +11407,10 @@ _FDB5   ;OR LY
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 addq.w  #8,d5
                 bcc     kernel
@@ -11429,10 +11429,10 @@ _FDB6   ;OR (IY+S)
                 move.w  sr,d7
                 and.b   #%00001110,d7
                 and.b   #%10110000,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d6           ;4    для ускорения эмуляции
-                move.b  d1,d6           ;4    можно
-                or.b    (a0,d6),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d6           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d1,d6           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d6),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 or.b    d7,d0
                 add.w   #19,d5
                 bcc     kernel
@@ -11874,7 +11874,7 @@ _DDCB05
                 bra     no_instr
 _DDCB06 ;RLC (IX+S)
                 move.b  (a0),d6
-;               еще нужно д7 получить!!!
+;               РµС‰Рµ РЅСѓР¶РЅРѕ Рґ7 РїРѕР»СѓС‡РёС‚СЊ!!!
 ;                cmp.w   #$4000,d7
 ;                bcs     _DDCB06wp
                 rol.b   #1,d6
@@ -11883,10 +11883,10 @@ _DDCB06 ;RLC (IX+S)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #23,d5
                 bcc     kernel
                 bra     interrupt
@@ -11895,10 +11895,10 @@ _DDCB06wp       rol.b   #1,d6
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #23,d5
                 bcc     kernel
                 bra     interrupt
@@ -11941,10 +11941,10 @@ _DDCB0E ;RRC (IX+S)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #23,d5
                 bcc     kernel
                 bra     interrupt
@@ -11953,10 +11953,10 @@ _DDCB0Ewp       ror.b   #1,d6
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #23,d5
                 bcc     kernel
                 bra     interrupt
@@ -11991,7 +11991,7 @@ _DDCB15
                 bra     no_instr
 _DDCB16 ;RL (IX+S)
                 move.b  (a0),d6
-;               еще нужно д7 получить!!!
+;               РµС‰Рµ РЅСѓР¶РЅРѕ Рґ7 РїРѕР»СѓС‡РёС‚СЊ!!!
 ;                cmp.w   #$4000,d7
 ;                bcs     _DDCB16wp
                 move.b  d0,d7
@@ -12002,10 +12002,10 @@ _DDCB16 ;RL (IX+S)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #23,d5
                 bcc     kernel
                 bra     interrupt
@@ -12016,10 +12016,10 @@ _DDCB16wp       move.b  d0,d7
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #23,d5
                 bcc     kernel
                 bra     interrupt
@@ -12064,10 +12064,10 @@ _DDCB1E ;RR (IX+S)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #23,d5
                 bcc     kernel
                 bra     interrupt
@@ -12110,10 +12110,10 @@ _DDCB26 ;SLA (IX+S)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -12122,10 +12122,10 @@ _DDCB26wp       asl.b   #1,d6
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #23,d5
                 bcc     kernel
                 bra     interrupt
@@ -12159,7 +12159,7 @@ _DDCB2D
                 bra     no_instr
 _DDCB2E ;SRA (IX+S)
                 move.b  (a0),d6
-                ;d7 нужно получить
+                ;d7 РЅСѓР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ
 ;                cmp.w   #$4000,d7
 ;                bcs     _DDCB2Ewp
                 asr.b   #1,d6
@@ -12168,10 +12168,10 @@ _DDCB2E ;SRA (IX+S)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #23,d5
                 bcc     kernel
                 bra     interrupt
@@ -12180,10 +12180,10 @@ _DDCB2Ewp       asr.b   #1,d6
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #23,d5
                 bcc     kernel
                 bra     interrupt
@@ -12218,7 +12218,7 @@ _DDCB35
                 bra     no_instr        
 _DDCB36 ;SLI (IX+S)
                 move.b  (a0),d6
-;               d7 нужно еще получить
+;               d7 РЅСѓР¶РЅРѕ РµС‰Рµ РїРѕР»СѓС‡РёС‚СЊ
 ;                cmp.w   #$4000,d7
 ;                bcs     _DDCB36wp
                 lsl.b   #1,d6
@@ -12228,10 +12228,10 @@ _DDCB36 ;SLI (IX+S)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #23,d5
                 bcc     kernel
                 bra     interrupt
@@ -12240,10 +12240,10 @@ _DDCB36wp       lsl.b   #1,d6
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #23,d5
                 bcc     kernel
                 bra     interrupt
@@ -12286,10 +12286,10 @@ _DDCB3E ;SRL (IX+S)
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #15,d5
                 bcc     kernel
                 bra     interrupt
@@ -12298,10 +12298,10 @@ _DDCB3Ewp       lsr.b   #1,d6
                 and.b   #%00001101,d7
                 and.b   #%00110000,d0
                 or.b    d7,d0
-                lea     parity(a5),a0   ;8    Установка флага четности
-                moveq.l #0,d7           ;4    для ускорения эмуляции
-                move.b  d6,d7           ;4    можно
-                or.b    (a0,d7),d0      ;4+10 удалить
+                lea     parity(a5),a0   ;8    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° С‡РµС‚РЅРѕСЃС‚Рё
+                moveq.l #0,d7           ;4    РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ СЌРјСѓР»СЏС†РёРё
+                move.b  d6,d7           ;4    РјРѕР¶РЅРѕ
+                or.b    (a0,d7),d0      ;4+10 СѓРґР°Р»РёС‚СЊ
                 add.w   #23,d5
                 bcc     kernel
                 bra     interrupt

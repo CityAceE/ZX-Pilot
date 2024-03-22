@@ -2,7 +2,7 @@ scr_upd_lr1bpp_fs
                 move.l  zx_scr_tab(a5),a0
                 adda.w  scroll_y_const(a5),a0
 
-                move.l  (a0),a2        ;Адрес первой линии знаколинии
+                move.l  (a0),a2        ;РђРґСЂРµСЃ РїРµСЂРІРѕР№ Р»РёРЅРёРё Р·РЅР°РєРѕР»РёРЅРёРё
                 adda.w  scroll_x_const(a5),a2
 
                 move.l  palm_screen(a5),a3
@@ -13,7 +13,7 @@ scr_upd_lr1bpp_fs
                 move.l  #120-1,d1
 
 next_line_lr_fs 
-                move.l  (a0)+,a4        ;Адрес первой линии знаколинии
+                move.l  (a0)+,a4        ;РђРґСЂРµСЃ РїРµСЂРІРѕР№ Р»РёРЅРёРё Р·РЅР°РєРѕР»РёРЅРёРё
 
                 adda.w  scroll_x_const(a5),a4
 

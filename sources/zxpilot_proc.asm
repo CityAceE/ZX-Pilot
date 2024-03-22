@@ -1,4 +1,4 @@
-;Разные процедуры и подпрограммы:
+;Р Р°Р·РЅС‹Рµ РїСЂРѕС†РµРґСѓСЂС‹ Рё РїРѕРґРїСЂРѕРіСЂР°РјРјС‹:
 ;HiRes_on
 ;flash
 ;hex2ascii
@@ -8,22 +8,22 @@
 ;=============================================
 
 HiRes_off
-                ;А это вообще CLIE?
+                ;Рђ СЌС‚Рѕ РІРѕРѕР±С‰Рµ CLIE?
                 systrap FtrGet(#$536f4e79.l, #1.w, &sonyHiResRefNum(a5).l)
-                tst.l   d0              ;если не ноль, то это
-                bne     no_hires        ;не Cони!
-                ;А доступен ли HiRes?
+                tst.l   d0              ;РµСЃР»Рё РЅРµ РЅРѕР»СЊ, С‚Рѕ СЌС‚Рѕ
+                bne     no_hires        ;РЅРµ CРѕРЅРё!
+                ;Рђ РґРѕСЃС‚СѓРїРµРЅ Р»Рё HiRes?
                 moveq   #1,d0
                 movea.l sonyHiResRefNum(a5),a0
                 and.l   8(a0),d0
-                beq     no_hires        ;Режим HiRes не доступен на этой Соне
+                beq     no_hires        ;Р РµР¶РёРј HiRes РЅРµ РґРѕСЃС‚СѓРїРµРЅ РЅР° СЌС‚РѕР№ РЎРѕРЅРµ
 
-                ;Ищем библиотеку HiRes
+                ;РС‰РµРј Р±РёР±Р»РёРѕС‚РµРєСѓ HiRes
                 systrap SysLibFind(&sonySysLibNameHR(a5).l, &sonyHiResRefNum(a5).l)
                 tst.w   d0
-                beq     HiRes_off_1       ;HiRes доступен
+                beq     HiRes_off_1       ;HiRes РґРѕСЃС‚СѓРїРµРЅ
                 cmpi.w  #$050a,d0       ;error == sysErrLibNotFound)
-                beq     no_hires        ;Такой библиотеки нет!
+                beq     no_hires        ;РўР°РєРѕР№ Р±РёР±Р»РёРѕС‚РµРєРё РЅРµС‚!
 
 HiRes_off_1
                 move.l  #160,temp(a5)
@@ -33,32 +33,32 @@ HiRes_off_1
                 move.b  #0,HiRes(a5)
                 rts
 ;----------------------------------------------
-;Проверка и установка HiRes
-;(было HiRes_detect)
+;РџСЂРѕРІРµСЂРєР° Рё СѓСЃС‚Р°РЅРѕРІРєР° HiRes
+;(Р±С‹Р»Рѕ HiRes_detect)
                 
 HiRes_on        
-                ;А это вообще CLIE?
+                ;Рђ СЌС‚Рѕ РІРѕРѕР±С‰Рµ CLIE?
                 systrap FtrGet(#$536f4e79.l, #1.w, &sonyHiResRefNum(a5).l)
-                tst.l   d0              ;если не ноль, то это
-                bne     no_hires        ;не Cони!
-                ;А доступен ли HiRes?
+                tst.l   d0              ;РµСЃР»Рё РЅРµ РЅРѕР»СЊ, С‚Рѕ СЌС‚Рѕ
+                bne     no_hires        ;РЅРµ CРѕРЅРё!
+                ;Рђ РґРѕСЃС‚СѓРїРµРЅ Р»Рё HiRes?
                 moveq   #1,d0
                 movea.l sonyHiResRefNum(a5),a0
                 and.l   8(a0),d0
-                beq     no_hires        ;Режим HiRes не доступен на этой Соне
+                beq     no_hires        ;Р РµР¶РёРј HiRes РЅРµ РґРѕСЃС‚СѓРїРµРЅ РЅР° СЌС‚РѕР№ РЎРѕРЅРµ
 
-                ;Ищем библиотеку HiRes
+                ;РС‰РµРј Р±РёР±Р»РёРѕС‚РµРєСѓ HiRes
                 systrap SysLibFind(&sonySysLibNameHR(a5).l, &sonyHiResRefNum(a5).l)
                 tst.w   d0
-                beq     hires_ava       ;HiRes доступен
+                beq     hires_ava       ;HiRes РґРѕСЃС‚СѓРїРµРЅ
                 cmpi.w  #$050a,d0       ;error == sysErrLibNotFound)
-                beq     no_hires        ;Такой библиотеки нет!
-                ;Загружаем библиотеку HiRes, если она не загружена
+                beq     no_hires        ;РўР°РєРѕР№ Р±РёР±Р»РёРѕС‚РµРєРё РЅРµС‚!
+                ;Р—Р°РіСЂСѓР¶Р°РµРј Р±РёР±Р»РёРѕС‚РµРєСѓ HiRes, РµСЃР»Рё РѕРЅР° РЅРµ Р·Р°РіСЂСѓР¶РµРЅР°
                 systrap SysLibLoad(#$6c696272.l, #$536c4872.l, &sonyHiResRefNum(a5).l)
                 tst.w   d0
                 bne     no_hires
                 ;-------------------
-                ;CLIE HiRes доступен
+                ;CLIE HiRes РґРѕСЃС‚СѓРїРµРЅ
 hires_ava       
                 systrap HROpen(sonyHiResRefNum(a5).w)
                 move.l  #320,temp(a5)
@@ -72,7 +72,7 @@ hires_ava1
 no_hires        
 
 ;--------------------------------------------
-;Определение выского разрешения для Palm OS 5
+;РћРїСЂРµРґРµР»РµРЅРёРµ РІС‹СЃРєРѕРіРѕ СЂР°Р·СЂРµС€РµРЅРёСЏ РґР»СЏ Palm OS 5
                 systrap FtrGet(#$70737973.l,#24.w,&temp(a5))
                 tst.w   d0
                 bne     no_hires1
@@ -84,18 +84,18 @@ no_hires
                 ;WinScreenGetAttribute(winScreenDensity, &attr)
                 ;systrap WinScreenGetAttribute(#winScreenDensity.b, &temp(a5))
                 
-                moveq   #14,d2  ;Подпорка получена дизассемблированием
+                moveq   #14,d2  ;РџРѕРґРїРѕСЂРєР° РїРѕР»СѓС‡РµРЅР° РґРёР·Р°СЃСЃРµРјР±Р»РёСЂРѕРІР°РЅРёРµРј
                 systrap WinScreenGetAttribute(#5.b, &temp(a5))
                 cmp.l   #144.b,temp(a5) ;kDensityDouble = 144
                 beq     hires_ava1
 no_hires1
 ;--------------------------------------------
 
-                move.b  #0,HiRes(a5)    ;CLIE HiRes не доступен
+                move.b  #0,HiRes(a5)    ;CLIE HiRes РЅРµ РґРѕСЃС‚СѓРїРµРЅ
                 rts
 
 ;=========================================
-;Мигалка
+;РњРёРіР°Р»РєР°
 flash           subq.b  #1,flash_count(a5)
                 bne     no_flash
                 move.b  #16,flash_count(a5)
@@ -114,7 +114,7 @@ no_flash1       dbra    d1,no_flash2
 no_flash        rts
 
 ;==============================================
-;Подпрограмма перевода HEX-числа в ASCII стринг
+;РџРѕРґРїСЂРѕРіСЂР°РјРјР° РїРµСЂРµРІРѕРґР° HEX-С‡РёСЃР»Р° РІ ASCII СЃС‚СЂРёРЅРі
 ;Input d1.l - hex number
 ;Input a4.l - string pointer
 
@@ -138,8 +138,8 @@ adder           add.b   #$30,d0
 
 
 ;====================================================
-;Подпрограммы построения таблиц цвета для разных цветовых режимов
-;Разворачиваем палитру для 4bpp
+;РџРѕРґРїСЂРѕРіСЂР°РјРјС‹ РїРѕСЃС‚СЂРѕРµРЅРёСЏ С‚Р°Р±Р»РёС† С†РІРµС‚Р° РґР»СЏ СЂР°Р·РЅС‹С… С†РІРµС‚РѕРІС‹С… СЂРµР¶РёРјРѕРІ
+;Р Р°Р·РІРѕСЂР°С‡РёРІР°РµРј РїР°Р»РёС‚СЂСѓ РґР»СЏ 4bpp
 
 palette_4bpp    move.l  palitra(a5),a3
                 lea     ZX_palette_bw(a5),a4
@@ -166,10 +166,10 @@ swaper2         move.b  d7,d3
                 and.b   #%0111,d3
                 or      d7,d3
                 and.l   #%1111,d3
-                move.b  (a4,d3),d3      ;в d3 имеем цвет чернил
+                move.b  (a4,d3),d3      ;РІ d3 РёРјРµРµРј С†РІРµС‚ С‡РµСЂРЅРёР»
                 lsr.b   #3,d5
                 and.l   #%1111,d5
-                move.b  (a4,d5),d7      ;в d7 имеем цвет бумаги
+                move.b  (a4,d5),d7      ;РІ d7 РёРјРµРµРј С†РІРµС‚ Р±СѓРјР°РіРё
                 moveq.l #0,d2
 pal_nibble_gr   move.b  d2,d0
                 lsl.b   #5,d0
@@ -203,7 +203,7 @@ paigr4          move.b  d6,(a3)+
                 bcc     next_attrib_gr
                 rts
 
-;Разворачиваем палитру для 8bpp
+;Р Р°Р·РІРѕСЂР°С‡РёРІР°РµРј РїР°Р»РёС‚СЂСѓ РґР»СЏ 8bpp
 ;color_enable    
                 
 palette_8bpp    move.l  palitra(a5),a3
@@ -232,10 +232,10 @@ swaper1         move.b  d7,d3
                 and.b   #%0111,d3
                 or      d7,d3
                 and.l   #%1111,d3
-                move.b  (a4,d3),d3      ;в d3 имеем цвет чернил
+                move.b  (a4,d3),d3      ;РІ d3 РёРјРµРµРј С†РІРµС‚ С‡РµСЂРЅРёР»
                 lsr.b   #3,d5
                 and.l   #%1111,d5
-                move.b  (a4,d5),d7      ;в d7 имеем цвет бумаги
+                move.b  (a4,d5),d7      ;РІ d7 РёРјРµРµРј С†РІРµС‚ Р±СѓРјР°РіРё
                 moveq.l #0,d2
 pal_nibble      move.b  d2,d0
                 lsl.b   #5,d0
@@ -266,9 +266,9 @@ pai4            addq.b  #1,d2
                 rts
 
 ;====================================
-;Установка требуемого ражима экрана
-;на выходе d0=0 - переключение произошло успешно
-;на выходе d1=$ff - переключения не произошло
+;РЈСЃС‚Р°РЅРѕРІРєР° С‚СЂРµР±СѓРµРјРѕРіРѕ СЂР°Р¶РёРјР° СЌРєСЂР°РЅР°
+;РЅР° РІС‹С…РѕРґРµ d0=0 - РїРµСЂРµРєР»СЋС‡РµРЅРёРµ РїСЂРѕРёР·РѕС€Р»Рѕ СѓСЃРїРµС€РЅРѕ
+;РЅР° РІС‹С…РѕРґРµ d1=$ff - РїРµСЂРµРєР»СЋС‡РµРЅРёСЏ РЅРµ РїСЂРѕРёР·РѕС€Р»Рѕ
 
 mode_he4bpp
                 move.l  #4,temp(a5)
@@ -430,12 +430,12 @@ mode_lr1bpp
                 bra     mode_on
 
 ;------------------------------------------
-;Требуемый режим включен
+;РўСЂРµР±СѓРµРјС‹Р№ СЂРµР¶РёРј РІРєР»СЋС‡РµРЅ
 mode_on
                 moveq.l #0,d0
                 rts
 ;------------------------------------------
-;Режим не поддерживается на этом устройстве
+;Р РµР¶РёРј РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ РЅР° СЌС‚РѕРј СѓСЃС‚СЂРѕР№СЃС‚РІРµ
 mode_off
                 moveq.l #-1,d0
                 rts
